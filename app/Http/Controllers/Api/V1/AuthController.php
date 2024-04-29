@@ -3,24 +3,25 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Services\Common\ServiceResult;
-use App\Services\CRUD\AuthService;
+use App\Http\Resources\UserResource;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
 
-    private AuthService $service;
-
-    public function __construct(AuthService $service)
+    public function __construct
+    (
+        private readonly UserService $userService
+    )
     {
-        $this->service = $service;
+
     }
 
     public function register(Request $request)
     {
 
-       $result = $this->service->create($request->all());
+       $result = $this->userService->create($request->all());
 
         if ($result->isError) {
             return response()->json([
@@ -29,13 +30,21 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = $result->data;
-        $token = $user->createToken($user->name)->plainTextToken;
+        return UserResource::make($result->data['user']);
+    }
 
-        return response()->json([
-            'user' => $user,
-            'token'=>$token,
-        ]);
+    public function login(Request $request)
+    {
+        $result = $this->userService->login($request->all());
+
+        if ($result->isError){
+            return response()->json([
+                $result->message,
+                $result->errors
+            ]);
+        }
+
+        return UserResource::make($result->data['user']);
     }
 
 

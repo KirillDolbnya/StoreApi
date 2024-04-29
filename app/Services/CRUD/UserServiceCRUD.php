@@ -3,14 +3,14 @@
 namespace App\Services\CRUD;
 
 use App\Models\User;
-use App\Repositories\CRUD\AuthRepository;
+use App\Repositories\CRUD\UserRepository;
 use App\Services\Common\ServiceResult;
 use Illuminate\Database\Eloquent\Model;
 
-class AuthService extends Common\BaseCRUDService
+class UserServiceCRUD extends Common\BaseCRUDService
 {
 
-    public function __construct(AuthRepository $repository)
+    public function __construct(UserRepository $repository)
     {
         parent::__construct($repository);
     }
@@ -52,7 +52,11 @@ class AuthService extends Common\BaseCRUDService
 
 
         $user = $model->create($properties);
+        $token = $user->createToken($user->name)->plainTextToken;
 
-        return ServiceResult::createSuccessResult($user);
+        return ServiceResult::createSuccessResult([
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 }
