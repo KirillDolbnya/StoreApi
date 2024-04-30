@@ -8,7 +8,36 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthService
 {
-    public function login($credentials): ServiceResult
+
+    public function __construct
+    (
+        private readonly UserService $userService
+    )
+    {
+    }
+
+    public function register(array $properties): ServiceResult
+    {
+
+        $result = $this->userService->create($properties);
+
+        if ($result->isError){
+            return ServiceResult::createErrorResult(
+                'Введены не валидные данные',
+                $result->errors
+            );
+        }
+
+        $user = $result->data;
+        $token = $this->userService->createToken($user);
+
+        return ServiceResult::createSuccessResult([
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
+
+    public function login($credentials)
     {
         $valid = Validator::make($credentials,[
             'email' => 'required|email',
@@ -27,7 +56,7 @@ class AuthService
         }
 
         $user = Auth::getUser();
-        $token = $user->createToken($user->name)->plainTextToken;
+        $token = $this->userService->createToken($user);
 
         return ServiceResult::createSuccessResult([
             'user' => $user,

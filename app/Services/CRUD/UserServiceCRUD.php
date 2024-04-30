@@ -4,7 +4,6 @@ namespace App\Services\CRUD;
 
 use App\Models\User;
 use App\Repositories\CRUD\UserRepository;
-use App\Services\Common\ServiceResult;
 use Illuminate\Database\Eloquent\Model;
 
 class UserServiceCRUD extends Common\BaseCRUDService
@@ -33,30 +32,5 @@ class UserServiceCRUD extends Common\BaseCRUDService
             'email'=>'unique:users,email|required|email',
             'password'=> 'required',
         ];
-    }
-
-    public function create(array $properties): ServiceResult
-    {
-        $model = $this->getModelInstance();
-
-        $result = $this->validateProperties($properties);
-
-
-        if ($result->fails()){
-            return ServiceResult::createErrorResult(
-                'Переданы не валидные данные',
-                $result->errors()->messages()
-            );
-        }
-
-
-
-        $user = $model->create($properties);
-        $token = $user->createToken($user->name)->plainTextToken;
-
-        return ServiceResult::createSuccessResult([
-            'user' => $user,
-            'token' => $token
-        ]);
     }
 }

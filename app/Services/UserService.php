@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\Common\ServiceResult;
 use App\Services\CRUD\UserServiceCRUD;
 
 class UserService
@@ -10,20 +9,19 @@ class UserService
 
     public function __construct
     (
-        private readonly UserServiceCRUD $userServiceCRUD,
-        private readonly AuthService $authService
+        private readonly UserServiceCRUD $userServiceCRUD
     )
     {
     }
 
-    public function create($properties)
+    public function create(array $properties)
     {
         return $this->userServiceCRUD->create($properties);
     }
 
-    public function login($properties)
+    public function createToken($user)
     {
-        return $this->authService->login($properties);
+        return $user->createToken($user->name)->plainTextToken;
     }
 
 }

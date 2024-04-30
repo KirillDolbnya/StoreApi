@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AuthResource;
+use App\Http\Resources\TokenResource;
 use App\Http\Resources\UserResource;
-use App\Services\UserService;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -12,7 +14,7 @@ class AuthController extends Controller
 
     public function __construct
     (
-        private readonly UserService $userService
+        private readonly AuthService $authService
     )
     {
 
@@ -20,22 +22,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
-       $result = $this->userService->create($request->all());
-
-        if ($result->isError) {
-            return response()->json([
-                'message' => $result->message,
-                'errors' => $result->errors
-            ]);
-        }
-
-        return UserResource::make($result->data['user']);
-    }
-
-    public function login(Request $request)
-    {
-        $result = $this->userService->login($request->all());
+        $result = $this->authService->register($request->all());
 
         if ($result->isError){
             return response()->json([
@@ -44,7 +31,21 @@ class AuthController extends Controller
             ]);
         }
 
-        return UserResource::make($result->data['user']);
+        return new AuthResource($result->data);
+    }
+
+    public function login(Request $request)
+    {
+        $result = $this->authService->login($request->all());
+
+        if ($result->isError){
+            return response()->json([
+                $result->message,
+                $result->errors
+            ]);
+        }
+
+        return new AuthResource($result->data);
     }
 
 
