@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Repositories\CRUD\Common\BaseCRUDRepository;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserRepository extends Common\BaseCRUDRepository
+class UserRepositoryCRUD extends Common\BaseCRUDRepository
 {
     public function getModelsQB(): Builder
     {

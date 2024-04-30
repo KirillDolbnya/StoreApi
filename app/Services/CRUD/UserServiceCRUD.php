@@ -3,13 +3,13 @@
 namespace App\Services\CRUD;
 
 use App\Models\User;
-use App\Repositories\CRUD\UserRepository;
+use App\Repositories\CRUD\UserRepositoryCRUD;
 use Illuminate\Database\Eloquent\Model;
 
 class UserServiceCRUD extends Common\BaseCRUDService
 {
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepositoryCRUD $repository)
     {
         parent::__construct($repository);
     }

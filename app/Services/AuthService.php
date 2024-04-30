@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\DTO\Auth\LoginDTO;
+use App\DTO\Auth\RegisterDTO;
 use App\Services\Common\ServiceResult;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -9,15 +11,15 @@ use Illuminate\Support\Facades\Validator;
 class AuthService
 {
 
-    public function __construct
-    (
+    public function __construct(
         private readonly UserService $userService
     )
     {
     }
 
-    public function register(array $properties): ServiceResult
+    public function register(RegisterDTO $registerDTO): ServiceResult
     {
+        $properties = $registerDTO->toArrayAsSnakeCase();
 
         $result = $this->userService->create($properties);
 
@@ -37,8 +39,10 @@ class AuthService
         ]);
     }
 
-    public function login($credentials)
+    public function login(LoginDTO $loginDTO)
     {
+        $credentials = $loginDTO->toArrayAsSnakeCase();
+
         $valid = Validator::make($credentials,[
             'email' => 'required|email',
             'password' => 'required'

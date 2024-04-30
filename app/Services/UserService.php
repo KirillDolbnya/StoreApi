@@ -7,8 +7,7 @@ use App\Services\CRUD\UserServiceCRUD;
 class UserService
 {
 
-    public function __construct
-    (
+    public function __construct(
         private readonly UserServiceCRUD $userServiceCRUD
     )
     {
