@@ -18,16 +18,22 @@ class ProductService
     {
         $result = $this->productRepository->getAll();
 
-        if (empty($result)){
+        if (empty($result->toArray())){
             return ServiceResult::createErrorResult('Товаров нет');
         }
 
         return ServiceResult::createSuccessResult($result);
     }
 
-//    public function getById()
-//    {
-//
-//    }
+    public function getById($id): ServiceResult
+    {
+        $result = $this->productRepository->getById($id);
+
+        if(empty($result->toArray())){
+            return ServiceResult::createErrorResult('Такого товара не существует');
+        }
+
+        return ServiceResult::createSuccessResult($result);
+    }
 
 }

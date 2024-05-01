@@ -29,6 +29,12 @@ class ProductController extends Controller
 
     public function getById($id)
     {
-        dd($id);
+       $result = $this->productService->getById($id);
+
+        if($result->isError){
+            return response()->json($result->message);
+        }
+
+        return ProductResource::collection($result->data);
     }
 }

@@ -21,6 +21,10 @@ class ProductRepository
 
     public function getById($id)
     {
+        $result = $this->getModel()->where([
+            'id' => $id
+        ])->get();
 
+        return $result;
     }
 }

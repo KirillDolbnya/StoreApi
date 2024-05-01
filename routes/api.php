@@ -37,5 +37,5 @@ Route::prefix('/v1')->group(function (){
             Route::get('/','getAll');
             Route::get('/{id}','getById');
         });
-    });
+    })->middleware('auth:sanctum');
 });
