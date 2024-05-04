@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductResourceCollection;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class ProductController extends Controller
             return response()->json($result->message);
         }
 
-        return ProductResource::collection($result->data);
+        return new ProductResourceCollection($result->data);
     }
 
     public function getById($id)
@@ -35,6 +36,6 @@ class ProductController extends Controller
             return response()->json($result->message);
         }
 
-        return ProductResource::collection($result->data);
+        return new ProductResource($result->data);
     }
 }

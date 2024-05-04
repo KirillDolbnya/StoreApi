@@ -23,7 +23,7 @@ class ProductRepository
     {
         $result = $this->getModel()->where([
             'id' => $id
-        ])->get();
+        ])->first();
 
         return $result;
     }

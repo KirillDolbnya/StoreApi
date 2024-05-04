@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,7 +29,7 @@ class ProductResource extends Resource
                     ->translateLabel()
                     ->string()
                     ->required(),
-                TextInput::make('description')
+                Textarea::make('description')
                     ->translateLabel()
                     ->string(),
                 TextInput::make('price')
