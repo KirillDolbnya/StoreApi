@@ -29,7 +29,7 @@ class ProductService
     {
         $result = $this->productRepository->getById($id);
 
-        if(empty($result->toArray())){
+        if(empty($result)){
             return ServiceResult::createErrorResult('Такого товара не существует');
         }
 
