@@ -36,4 +36,15 @@ class ProductService
         return ServiceResult::createSuccessResult($result);
     }
 
+    public function getProductCategories($id): ServiceResult
+    {
+        $result = $this->productRepository->getProductCategories($id);
+
+        if (empty($result->toArray())){
+            return ServiceResult::createErrorResult('По заданным параметрам ничего не найдено');
+        }
+
+        return ServiceResult::createSuccessResult($result);
+    }
+
 }

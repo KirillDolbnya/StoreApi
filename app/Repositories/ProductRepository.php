@@ -7,24 +7,29 @@ use App\Models\Product;
 class ProductRepository
 {
 
-    public function getModel()
+    public function getModelQuery()
     {
         return Product::query();
     }
 
     public function getAll()
     {
-        $result = $this->getModel()->get();
+        $result = $this->getModelQuery()->get();
 
         return $result;
     }
 
     public function getById($id)
     {
-        $result = $this->getModel()->where([
+        $result = $this->getModelQuery()->where([
             'id' => $id
         ])->first();
 
         return $result;
+    }
+
+    public function getProductCategories($id)
+    {
+        return $this->getModelQuery()->find($id)->getModel()->category()->get();
     }
 }

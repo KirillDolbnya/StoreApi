@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -40,6 +42,11 @@ class ProductResource extends Resource
                     ->translateLabel()
                     ->required()
                     ->image(),
+                Select::make('category')
+                    ->translateLabel()
+                    ->relationship(name: 'category', titleAttribute: 'category_id')
+                    ->options(Category::all()->pluck('name','id'))
+                    ->nullable(),
             ]);
     }
 

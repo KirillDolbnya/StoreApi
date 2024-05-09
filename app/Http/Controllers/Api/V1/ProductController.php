@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResourceCollection;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductResourceCollection;
 use App\Services\ProductService;
@@ -37,5 +38,16 @@ class ProductController extends Controller
         }
 
         return new ProductResource($result->data);
+    }
+
+    public function getProductCategories($id)
+    {
+        $result = $this->productService->getProductCategories($id);
+
+        if ($result->isError){
+            return response()->json($result->message);
+        }
+
+        return new CategoryResourceCollection($result->data);
     }
 }

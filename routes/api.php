@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,15 @@ Route::prefix('/v1')->group(function (){
         Route::controller(ProductController::class)->group(function (){
             Route::get('/','getAll');
             Route::get('/{id}','getById');
+            Route::get('/{id}/categories','getProductCategories');
+        });
+    })->middleware('auth:sanctum');
+
+    Route::prefix('/categories')->group(function (){
+        Route::controller(CategoryController::class)->group(function (){
+            Route::get('/','getAll');
+            Route::get('/{id}','getById');
+            Route::get('/{id}/products', 'getCatProducts');
         });
     })->middleware('auth:sanctum');
 });
