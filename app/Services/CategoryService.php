@@ -14,13 +14,9 @@ class CategoryService
     {
     }
 
-    public function getAll(): ServiceResult
+    public function getAll()
     {
         $result = $this->categoryRepository->getAll();
-
-        if (empty($result->toArray())){
-            return ServiceResult::createErrorResult('Категорий нет');
-        }
 
         return ServiceResult::createSuccessResult($result);
     }
@@ -36,7 +32,7 @@ class CategoryService
         return ServiceResult::createSuccessResult($result);
     }
 
-    public function getCatProducts($id): ServiceResult
+    public function getCategoryProducts($id): ServiceResult
     {
         $result = $this->categoryRepository->getProducts($id);
 

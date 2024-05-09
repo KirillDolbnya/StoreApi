@@ -26,7 +26,7 @@ class CategoryRepository
 
     public function getProducts($id)
     {
-        return $this->getModelQuery()->find($id)->getModel()->product()->get();
+        return $this->getModelQuery()->find($id)->product()->get();
     }
 
 }

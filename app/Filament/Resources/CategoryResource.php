@@ -28,6 +28,7 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->translateLabel()
                     ->string()
+                    ->unique()
                     ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->translateLabel()

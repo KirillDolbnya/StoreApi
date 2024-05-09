@@ -14,13 +14,9 @@ class ProductService
     {
     }
 
-    public function getAll(): ServiceResult
+    public function getAll()
     {
         $result = $this->productRepository->getAll();
-
-        if (empty($result->toArray())){
-            return ServiceResult::createErrorResult('Товаров нет');
-        }
 
         return ServiceResult::createSuccessResult($result);
     }

@@ -44,6 +44,7 @@ class ProductResource extends Resource
                     ->image(),
                 Select::make('category')
                     ->translateLabel()
+                    ->multiple()
                     ->relationship(name: 'category', titleAttribute: 'category_id')
                     ->options(Category::all()->pluck('name','id'))
                     ->nullable(),

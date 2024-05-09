@@ -30,6 +30,6 @@ class ProductRepository
 
     public function getProductCategories($id)
     {
-        return $this->getModelQuery()->find($id)->getModel()->category()->get();
+        return $this->getModelQuery()->find($id)->category()->get();
     }
 }

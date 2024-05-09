@@ -39,7 +39,7 @@ Route::prefix('/v1')->group(function (){
             Route::get('/{id}','getById');
             Route::get('/{id}/categories','getProductCategories');
         });
-    })->middleware('auth:sanctum');
+    });
 
     Route::prefix('/categories')->group(function (){
         Route::controller(CategoryController::class)->group(function (){
@@ -47,5 +47,5 @@ Route::prefix('/v1')->group(function (){
             Route::get('/{id}','getById');
             Route::get('/{id}/products', 'getCatProducts');
         });
-    })->middleware('auth:sanctum');
-});
+    });
+})->middleware('auth:sanctum');

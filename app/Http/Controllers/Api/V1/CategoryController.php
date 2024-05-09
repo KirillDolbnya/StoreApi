@@ -21,10 +21,6 @@ class CategoryController extends Controller
     {
         $result = $this->categoryService->getAll();
 
-        if ($result->isError){
-            return response()->json($result->message);
-        }
-
         return new CategoryResourceCollection($result->data);
     }
 
@@ -43,7 +39,7 @@ class CategoryController extends Controller
 
     public function getCatProducts($id)
     {
-        $result = $this->categoryService->getCatProducts($id);
+        $result = $this->categoryService->getCategoryProducts($id);
 
         if($result->isError){
             return response()->json($result->message);

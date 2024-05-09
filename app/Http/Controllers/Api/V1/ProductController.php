@@ -22,10 +22,6 @@ class ProductController extends Controller
     {
         $result = $this->productService->getAll();
 
-        if($result->isError){
-            return response()->json($result->message);
-        }
-
         return new ProductResourceCollection($result->data);
     }
 
